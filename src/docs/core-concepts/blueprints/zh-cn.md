@@ -7,17 +7,17 @@ description: 学习蓝图与其配置
 
 ## 蓝图是什么？
 
-**蓝图**（`.ajblueprint`）是 Animated Java 的 BlockBench 项目文件。它包含 Animated Java 建立动画模型所需的一切：模型、材质、动画、[变种](/docs/core-concepts/variants)、[材质槽位](/docs/core-concepts/texture-slots)与导出配置。
+**蓝图**（`.ajblueprint`）是 Animated Java 的 BlockBench 项目文件。它包含 Animated Java 构建绑定体所需的一切：模型、材质、动画、[变种](/docs/core-concepts/variants)、[材质槽位](/docs/core-concepts/texture-slots)与导出配置。
 
-当蓝图[导出](/docs/core-concepts/exporting)时， Animated Java 将其转变为 **资源包** （模型与材质）与 **数据包** （游戏内模型生成、动画控制与绑定的命令）。
+当蓝图[导出](/docs/core-concepts/exporting)时，Animated Java 将其转变为 **资源包** （模型与材质）与 **数据包** （在游戏内生成绑定体、播放动画并控制绑定体的命令）。 
 
-打开旧版本的蓝图时 Animated Java 将自动更新其版本。 `0.x` 版本的项目（`.ajmodel` 类型文件）也可以转换，见 [历史发布版本](/docs/resources/legacy-releases).
+打开旧版本的蓝图时 Animated Java 将自动更新其版本。 `0.x` 版本的项目（`.ajmodel` 类型文件）也可以转换，见 [历史发布版本](/docs/resources/legacy-releases)。
 
 ---
 
 ## 蓝图设置
 
-在顶部目录中点击 **Animated Java <i class="minecraft-right-arrow"></i> Blueprint Settings** 打开蓝图设置。设置界面被分为多个页面，有些界面仅在特定 [目标环境](#target-environment) 中出现。切换界面或关闭都会保存修改。
+在菜单栏中点击 **Animated Java <i class="minecraft-right-arrow"></i> Blueprint Settings** 打开蓝图设置。设置界面被分为多个页面，有些界面仅在特定 [目标环境](#目标环境) 中出现。切换界面或关闭都会保存修改。
 
 ### 常规
 
@@ -25,8 +25,8 @@ description: 学习蓝图与其配置
 
     你的模型在游戏中将如何运行：
 
-    -   **Datapack** ：导出一个资源包与数据包。这是默认选项，也是大多数指南中描述的类型。
-    -   **Plugin** ：导出单独的 JSON 文件供服务器插件读取。数据包、资源包、绑定与函数都由 [插件](#plugin) 替换。见 [插件导出](/docs/core-concepts/exporting#plugin-exports)。
+    -   **Datapack** ：导出一个资源包与数据包。这是默认选项，也是这些文档大部分描述的情形。
+    -   **Plugin** ：导出单独的 JSON 文件供服务器插件读取。数据包、资源包、绑定体与函数的界面都由 [插件](#插件) 页面替换。见 [插件导出](/docs/core-concepts/exporting#plugin-exports)。
 
 -   #### 蓝图名
 
@@ -34,10 +34,10 @@ description: 学习蓝图与其配置
 
 -   #### 蓝图 ID
 
-    一个命名空间的 ID (例如 `my_pack:my_rig`) 标识了该蓝图。所有生成的函数、标签、存储与模型都将存于此 ID 下。
+    一个命名空间的 ID （例如 `my_pack:my_rig`） 标识了该蓝图。所有生成的函数、标签、存储与模型都将存于此 ID 下。
 
     :::info[例子]
-    `my_pack:my_rig` 会将函数放置于 `data/my_pack/function/my_rig/`，所以你需要使用`function my_pack:my_rig/summon`生成它。
+    `my_pack:my_rig` 会将函数放置于 `data/my_pack/function/my_rig/`，所以你需要使用 `function my_pack:my_rig/summon` 生成它。
     :::
 
     :::tip[提示]
@@ -55,19 +55,19 @@ description: 学习蓝图与其配置
 
 -   #### 目标 Minecraft 版本
 
-    需导出的 Minecraft 版本，例如 `26.2` (默认) 或 `1.20.4`。Animated Java 支持 **1.20.4** 及以上。
+    需导出的 Minecraft 版本，例如 `26.2` （默认） 或 `1.20.4`。Animated Java 支持 **1.20.4** 及以上。
 
     这将决定包如何生成与你可以使用哪些特性。例如：
 
     -   [方块旋转](/docs/nodes/cubes#rotation-limitations) 在 1.21.11 版本前受限制。
     -   [材质槽位](/docs/core-concepts/texture-slots) 命令、材质槽位帧与 [物品模型属性](/docs/configs/item-model-properties) 需要 1.21.4 及以上版本。
-    -   [使用生物堆栈](#use-entity-stacking) 只允许在 1.21.4 或更高版本关闭。
+    -   [使用实体堆叠](#使用实体堆叠) 只允许在 1.21.4 或更高版本关闭。
 
     修改后需重导出。
 
 -   #### 材质尺寸
 
-    UV 编辑器的分辨率。它需要与你使用的最大的材质尺寸相同且是 2 的整数倍，否则 Animated Java 将会发出警告。
+    UV 编辑器的分辨率。它需要与你使用的最大的材质尺寸相同且是 2 的整数次幂，否则 Animated Java 将会发出警告。
 
 ### 资源包
 
@@ -85,9 +85,9 @@ description: 学习蓝图与其配置
 
 -   #### 展示物品
 
-    用于展示模型而替代覆盖的物品。只在 1.21.2 版本以下可见。新版本使用 `minecraft:item_model` 物品组件代替，所以不需要覆盖物品。
+    为了展示绑定体骨骼而被覆盖模型的物品。只在 1.21.2 版本以下可见。新版本使用 `minecraft:item_model` 物品组件代替，所以不需要覆盖物品。
 
-    需选择一个模型的父节点为 `minecraft:item/generated` 的物品，例如 `minecraft:white_dye` （默认）。不同的蓝图可以共用一个展示物品。
+    需选择一个模型的父级为 `minecraft:item/generated` 的物品，例如 `minecraft:white_dye` （默认）。不同的蓝图可以共用一个展示物品。
 
 ### 数据包
 
@@ -95,7 +95,7 @@ description: 学习蓝图与其配置
 
 -   #### 数据包导出格式
 
-    **Folder**、**Zip** 或 **None**，与 [资源包导出格式](#resource-pack-export-format) 相同。
+    **Folder**、**Zip** 或 **None**，与 [资源包导出格式](#资源包导出格式) 相同。
 
 -   #### 数据包文件夹 / 压缩包
 
@@ -108,13 +108,13 @@ description: 学习蓝图与其配置
     -   **Functions** （默认）：为每一帧写一个函数。游戏内运行很快，但是会生成很多文件。
     -   **Storage** ：在 storage 中存储帧数据。生成的文件很少，但是运行稍慢。
 
-### 模型绑定
+### 绑定体
 
 仅在目标环境选为 **Datapack** 且数据包已经导出过之后才出现。
 
--   #### 自定义绑定实体标签
+-   #### 自定义绑定体实体标签
 
-    额外的标签，使用逗号分隔。生成模型时它将会添加到 **每一个** 绑定的模型。
+    额外的标签，使用逗号分隔。生成绑定体时，它会被添加到该绑定体中的 **每一个** 实体。
 
     :::note[例子]
     `my_pack.boss, my_pack.hostile`
@@ -122,11 +122,11 @@ description: 学习蓝图与其配置
 
 -   #### 插值时长
 
-    Minecraft 在动画帧之间平滑移动所需的刻数（即 NBT 标签 `interpolation_duration`）。更高的值看起来更平滑，但是反应更慢。默认为 `1`。
+    Minecraft 在动画帧之间平滑移动展示实体所需的刻数（即 NBT 标签 `interpolation_duration`）。更高的值看起来更平滑，但是反应更慢。默认为 `1`。
 
 -   #### 传送时长
 
-    Minecraft 在传送模型时平滑移动所需的刻数（即 NBT 标签 `teleport_duration`）。 Minecraft 最高允许值为 `59`，默认为 `1`。
+    Minecraft 传送绑定体的实体时，平滑移动它们所需的刻数（即 NBT 标签 `teleport_duration`）。 Minecraft 最高允许值为 `59`，默认为 `1`。
 
 -   #### 阴影半径
 
@@ -136,76 +136,76 @@ description: 学习蓝图与其配置
 
     根实体的阴影的黑暗程度。只在阴影半径大于 `0` 时有效。默认为 `1`。
 
--   #### Auto Update Rig Orientation
+-   #### 自动更新绑定体方位
 
-    When **enabled** (the default), the rig follows its root entity every tick: bones turn to match the root's rotation, and floating entities (Locator entities, Cameras, and Interactions) move to their place on the rig. You can move a rig by teleporting its root entity.
+    当 **开启**（默认）时，绑定体每刻都会跟随其根实体：骨骼朝向跟随根实体，悬浮实体（定位器实体，摄像机与交互实体）移动到它们在绑定体中的位置。你可以通过传送根实体移动整个绑定体。开启会消耗较高性能。
+    
+    当 **关闭** 时，绑定体只会在你使用 [`move`](/docs/function-api/utilities#move) 命令时移动。对于不需要每刻移动的绑定体建议关闭。
 
-    This is expensive. When **disabled**, the rig only moves when you call [`move`](/docs/function-api/utilities#move). Turn it off for rigs that don't move every tick.
+-   #### 使用实体堆叠
 
--   #### Use Entity Stacking
+    当 **开启**（默认）时，每个骨骼实体都会骑乘根实体。你可以使用 `execute on passengers` 选中它们，但是它们的旋转角度会不太精确。
 
-    When **enabled** (the default), every bone entity rides the root entity as a passenger. You can reach them with `execute on passengers`, but their rotation is less precise.
+    当 **关闭** 时，骨骼实体会是相互独立的实体，需要每刻传送到对应位置。骨骼的旋转角度会非常精确，所以绑定体移动时会很平滑。使用 [`as_node`](/docs/function-api/utilities#as_node) 来将其作为骨骼移动。
 
-    When **disabled**, bone entities are separate entities teleported into place every tick. Rotation is much more precise, so the rig turns smoothly while it moves. Use [`as_node`](/docs/function-api/utilities#as_node) to run commands as a bone.
+    关闭该选项需要 Minecraft 1.21.4 及以上版本，旧版本始终使用堆叠。
 
-    Turning this off requires Minecraft 1.21.4 or newer. Older versions always stack.
+### 事件函数
 
-### Event Functions
+仅在目标环境选为 **Datapack** 才出现。
 
-Only shown when the Target Environment is **Datapack**.
+在绑定体生命周期内特定情况下运行的函数。其运行时的位置与执行实体为根实体。支持 [MC-Build](https://mcbuild.dev) 语法。 编写时格式与 `.mcfunction` 文件相同。
 
-Commands that run at specific points in the rig's life. Each one runs `as` and `at` the root entity, and supports [MC-Build](https://mcbuild.dev) syntax. Write them like a `.mcfunction` file.
+-   #### 生成函数
 
--   #### On-Summon Function
+    在 [`summon`](/docs/function-api/summon) 函数执行的结尾，所有节点都准备好之后调用。
 
-    Runs at the end of the [`summon`](/docs/function-api/summon) function, after every node is set up.
+-   #### 移除函数
 
--   #### On-Remove Function
+    在 [`remove/this`](/docs/function-api/remove#removethis) 函数执行的开头，绑定体的实体还未移除前调用。
 
-    Runs at the start of [`remove/this`](/docs/function-api/remove#removethis), before the rig's entities are removed.
+-   #### 刻前函数
 
--   #### Pre-Tick Function
+    每刻都会调用。在 Animated Java 自己的逻辑运行 **之前** 调用。
 
-    Runs every tick, **before** Animated Java's own tick logic.
+-   #### 刻后函数
 
--   #### Post-Tick Function
+    每刻都会调用。在 Animated Java 自己的逻辑运行 **之后** 调用。
 
-    Runs every tick, **after** Animated Java's own tick logic.
+### 插件
 
-### Plugin
+仅在目标环境选为 **Plugin** 才出现。
 
-Only shown when the Target Environment is **Plugin**.
+-   #### JSON 文件
 
--   #### JSON File
+    导出 JSON 文件的位置。
 
-    Where to write the exported JSON file.
+-   #### 烘焙动画
 
--   #### Baked Animations
+    开启时，每一帧动画都会提前计算并存储在 JSON 文件。关闭时，只有关键帧会存储在 JSON 文件，插件需要自己插值。 有些插件要求使用烘焙动画。
 
-    When enabled, every animation frame is calculated ahead of time and stored in the JSON file. When disabled, the raw keyframes are stored instead, and the plugin has to interpolate them itself. Some plugins require baked animations.
+### 预览
 
-### Preview
+添加外部的资源包到编辑器，可以在蓝图预览时显示其自定义字体、物品、方块模型与材质。预览包只影响编辑器：不会被导出，也不会替换蓝图自身的资源包。
 
-Loads extra Resource Packs into the editor, so custom fonts, item and block models, and textures show up in your Blueprint's previews. Preview packs only affect the editor: they're never exported, and they don't replace your Blueprint's own Resource Pack.
+-   #### 预览资源包
 
--   #### Preview Resource Packs
+    一个资源包列表，每个资源包需要为 `.zip` 或者含 `pack.mcmeta` 文件。在上方的资源包会覆盖下方的资源包，可以使用箭头调整位置。
 
-    A list of Resource Packs, each one a folder containing `pack.mcmeta` or a `.zip` file. Packs higher in the list override packs below them. Use the arrows to reorder them.
+    在修改包文件后需点击 **重加载预览** 以更新。
 
-    Click **Reload Preview** after changing a pack's files.
+### 其它
 
-### Misc
+渲染盒是 Minecraft 用来决定你的绑定体是否需要在屏幕内渲染的包围盒。如果它太小，根实体离开视线时，绑定体的某些部分可能会消失。
 
-The render box is the area Minecraft uses to decide whether your rig is on screen. If it's too small, parts of the rig vanish when the root entity is just out of view.
+-   #### 预览渲染盒
 
--   #### Preview Render Box
+    在预览界面显示渲染盒。
 
-    Shows the render box in the viewport.
+-   #### 自动匹配渲染盒
 
--   #### Auto Render Box
+    为你的模型自动选择合适的渲染盒，推荐开启。
 
-    Fits the render box to your model automatically. Recommended.
+-   #### 渲染盒尺寸
 
--   #### Render Box Size
-
-    The render box's size, when Auto Render Box is off.
+    渲染盒的尺寸大小，仅在关闭自动匹配渲染盒时可用。
